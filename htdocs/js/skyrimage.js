@@ -32,7 +32,7 @@ var setOpacity = function (node, opacity) {
 };
 
 var sprintf = function(str) {
-	for (var i = 1; i < arguments.length; i++) {
+	for (var i = 1; i < arguments.length; ++i) {
 		str = str.replace(/%s/, arguments[i]);
 	}
 
@@ -68,11 +68,9 @@ var xhr = function(method, url, data, callbacks) {
 		for (var i in data) {
 			// For arrays, we need to iterate through each member.
 			if ((typeof(data[i]) == "object") && data[i].length) {
-
 				for (var a = 0; a < data[i].length; a++) {
 					post += sprintf("%s[]=%s&", i, encodeURIComponent(data[i][a]));
 				}
-
 			} else {
 				post += sprintf("%s=%s&", i, encodeURIComponent(data[i]));
 			}
@@ -118,8 +116,8 @@ var image = (function () {
 	var MAX_SCALE = 2.5;
 
 	var cache = {};
-	var centerX = (window.innerWidth / 4);
-	var centerY = (window.innerHeight / 2);
+	var centerX = parseInt(window.innerWidth / 4);
+	var centerY = parseInt(window.innerHeight / 2);
 	var currentImage = {};
 	var deg;
 	var fadingOut = false;
@@ -131,6 +129,7 @@ var image = (function () {
 	addEventListener("keydown", function (e) {
 		keysDown[e.keyCode] = true;
 
+		// Prevent up/down keys from scrolling
 		switch (e.keyCode) {
 			case 38:
 			case 40:
@@ -145,10 +144,9 @@ var image = (function () {
 
 	var onload = function (src) {
 		var image = cache[src];
-		var node = image.node;
 		image.loaded = true;
-		image.width = node.width;
-		image.height = node.height;
+		image.width = image.node.width;
+		image.height = image.node.height;
 
 		setPosition();
 	};
@@ -408,7 +406,6 @@ var text = (function () {
 // Share
 
 var shareModal = (function () {
-	//var TWEET_URL = "https://twitter.com/share?text=I made an image EPIC on Skyrimage!&url=";
 	var TWEET_URL = [
 		"https://twitter.com/intent/tweet",
 		"?original_referer=http%3A%2F%2Fwww.skyrimage.com%2F",
@@ -494,6 +491,10 @@ var createModal = (function () {
 		node.style.bottom = "-210px";
 	};
 
+	var validate = function () {
+		return (!imageInput.value || !textInput.value);
+	};
+
 	getNode("nav-create").addEventListener("click", function (e) {
 		e.preventDefault();
 		if (node.style.bottom == "-100px") {
@@ -508,7 +509,7 @@ var createModal = (function () {
 			return;
 		}
 
-		if (!imageInput.value || !textInput.value) {
+		if (!validate()) {
 			showError("Please include an image URL and some text.");
 			return;
 		}
@@ -526,8 +527,9 @@ var createModal = (function () {
 				showError("Sorry, an error occurred: " + e);
 			},
 			success: function (e) {
-				var json = JSON.parse(e);
 				hide();
+
+				var json = JSON.parse(e);
 				set(json.row);
 			}
 		});
@@ -591,7 +593,7 @@ var showError = function (message) {
 	var showNext = function () {
 		set(rows[rowIndex]);
 
-		if (++rowIndex >= rows.length - 1) {
+		if (++rowIndex >= (rows.length - 1)) {
 			rowIndex = 0;
 		}
 	};

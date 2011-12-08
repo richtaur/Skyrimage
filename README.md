@@ -9,6 +9,7 @@ A tool to generate a Skyrim-loading-screen-themed image with accompanying text.
 * WHERE active = 1
 * minify CSS and JS
 * find fullHeightScale for image and use that appropriately
+* paginate random skyrimages
 
 ### Low priority
 

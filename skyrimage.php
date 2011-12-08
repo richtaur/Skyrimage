@@ -15,7 +15,9 @@ class Skyrimage {
 	}
 
 	public function getRandomRows ($limit = 25) {
-		$statement = $this->pdo->prepare('SELECT * FROM skyrimages ORDER BY RAND() LIMIT :limit');
+		$statement = $this->pdo->prepare(
+			'SELECT * FROM skyrimages ORDER BY RAND() LIMIT :limit'
+		);
 		$statement->bindParam(':limit', $limit, PDO::PARAM_INT);
 		$statement->execute();
 
@@ -29,7 +31,9 @@ class Skyrimage {
 	}
 
 	public function getRowById ($id) {
-		$statement = $this->pdo->prepare('SELECT * FROM skyrimages WHERE id = :id');
+		$statement = $this->pdo->prepare(
+			'SELECT * FROM skyrimages WHERE id = :id'
+		);
 		$statement->bindParam(':id', $id, PDO::PARAM_INT);
 		$statement->execute();
 
@@ -37,14 +41,18 @@ class Skyrimage {
 	}
 
 	public function getRows ($start = 0, $limit = 25) {
-		$statement = $this->pdo->prepare('SELECT * FROM skyrimages ORDER BY time_added DESC');
+		$statement = $this->pdo->prepare(
+			'SELECT * FROM skyrimages ORDER BY time_added DESC'
+		);
 		$statement->execute();
 
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function insertRow ($src, $text) {
-		$statement = $this->pdo->prepare('INSERT INTO skyrimages (ip_address, src, text) VALUES (:ip_address, :src, :text)');
+		$statement = $this->pdo->prepare(
+			'INSERT INTO skyrimages (ip_address, src, text) VALUES (:ip_address, :src, :text)'
+		);
 		$statement->bindParam(':ip_address', getenv('REMOTE_ADDR'), PDO::PARAM_STR);
 		$statement->bindParam(':src', $src, PDO::PARAM_STR);
 		$statement->bindParam(':text', $text, PDO::PARAM_STR);
