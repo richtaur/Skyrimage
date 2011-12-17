@@ -611,9 +611,12 @@ var showError = function (message) {
 
 // Google ads
 
-getNode("google-hide").addEventListener("click", function () {
-	getNode("google-ad").style.display = "none";
-}, false);
+var googleHide = getNode("google-hide");
+if (googleHide) {
+	googleHide.addEventListener("click", function () {
+		getNode("google-ad").style.display = "none";
+	}, false);
+}
 
 // Main loop
 

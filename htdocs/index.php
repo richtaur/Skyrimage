@@ -41,10 +41,12 @@
 		</div>
 		<div id="error"></div>
 
+		<!--
 		<div id="google-ad">
-			<?php include '../tpl/google_ad.html'; ?>
+			<?php //include '../tpl/google_ad.html'; ?>
 			<div><button id="google-hide">Hide</button></div>
 		</div>
+		-->
 
 		<div id="text"></div>
 		<script src="js/skyrimage.js"></script>
